@@ -401,7 +401,7 @@ function App() {
         <div className="container mx-auto px-4 text-center">
           <p className="text-blue-200 font-medium">Selaiah Radio Online LLC</p>
           <p className="text-blue-200">© 2025 Selaiah Radio Online - Todos los derechos reservados</p>
-          <p className="text-sm text-blue-300 mt-2">Tu radio cristiana 24/7</p>
+          <p className="text-sm text-blue-300 mt-2">Donde el cielo toca la tierra</p>
         </div>
       </footer>
     </div>

@@ -27,7 +27,7 @@ function Footer() {
           © 2025 Selaiah Radio Online - Todos los derechos reservados
         </Typography>
         <Typography variant="caption" align="center" display="block" sx={{ mt: 1 }}>
-          Tu radio cristiana 24/7
+          Donde el cielo toca la tierra
         </Typography>
       </Container>
     </Box>
