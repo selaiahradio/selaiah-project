@@ -184,7 +184,7 @@ function RadioPlayer() {
         {/* Now Playing */}
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Avatar
-            src={nowPlaying?.albumArt || '/logo.svg'}
+            src={nowPlaying?.albumArt || '/logo.png'}
             sx={{ 
               width: 80, 
               height: 80, 
