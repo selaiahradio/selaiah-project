@@ -1,0 +1,28 @@
+{
+  "short_name": "Selaiah Radio",
+  "name": "Selaiah Radio - Tu Radio Cristiana 24/7",
+  "description": "Radio cristiana en línea con música, predicaciones y programas cristianos",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "categories": ["music", "entertainment", "lifestyle"],
+  "orientation": "portrait-primary"
+}
