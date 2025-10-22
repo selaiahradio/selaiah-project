@@ -2,5 +2,11 @@
   "buildCommand": "cd frontend-web && npm install && npm run build",
   "outputDirectory": "frontend-web/build",
   "framework": null,
-  "installCommand": "cd frontend-web && npm install"
+  "installCommand": "cd frontend-web && npm install",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
