@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' http://localhost:* https://*; media-src 'self' https:;">
+  <title>🎵 Selaiah Radio</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="spinner"></div>
+    <p>Cargando Selaiah Radio...</p>
+  </div>
+
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="screen" style="display: none;">
+    <div class="auth-container">
+      <div class="auth-header">
+        <div class="logo">🎵</div>
+        <h1>Selaiah Radio</h1>
+        <p class="subtitle">Radio cristiana 24/7</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Iniciar Sesión</button>
+        <button class="tab" data-tab="register">Registrarse</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="tu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="login-password" placeholder="Mínimo 6 caracteres" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        <p class="error-message" id="login-error"></p>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label>Nombre Completo</label>
+          <input type="text" id="register-name" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="register-email" placeholder="tu@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" required>
+        </div>
+        <div class="form-group">
+          <label>Género</label>
+          <select id="register-gender" required>
+            <option value="male">Masculino (Varón)</option>
+            <option value="female">Femenino (Hermana)</option>
+            <option value="other">Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+        <p class="error-message" id="register-error"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Screen -->
+  <div id="main-screen" class="screen" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>🎵 Selaiah Radio</h1>
+        <div class="user-info">
+          <span id="user-name"></span>
+          <button id="logout-btn" class="btn btn-outline">Cerrar Sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Greeting -->
+      <div id="greeting-card" class="greeting-card">
+        <p id="greeting-message"></p>
+      </div>
+
+      <!-- Player Card -->
+      <div class="player-card">
+        <!-- Artwork -->
+        <div class="artwork-container">
+          <img id="artwork" src="" alt="Album Art" class="artwork">
+          <div class="artwork-overlay" id="artwork-overlay">
+            <div class="pulse"></div>
+          </div>
+        </div>
+
+        <!-- Song Info -->
+        <div class="song-info">
+          <h2 id="song-title">Cargando...</h2>
+          <p id="song-artist">Artista</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button id="play-btn" class="btn-play">
+            <svg id="play-icon" width="48" height="48" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg id="pause-icon" width="48" height="48" viewBox="0 0 24 24" fill="white" style="display: none;">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Volume Control -->
+        <div class="volume-control">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+          </svg>
+          <input type="range" id="volume-slider" min="0" max="100" value="70" class="slider">
+          <span id="volume-value">70%</span>
+        </div>
+
+        <!-- Listeners -->
+        <div class="listeners">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"/>
+          </svg>
+          <span id="listeners-count">0</span>
+          <span>oyentes</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#f44336">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <h3>0</h3>
+          <p>Favoritos</p>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#1976d2">
+            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+          </svg>
+          <h3>0</h3>
+          <p>Historial</p>
+        </div>
+        <div class="stat-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#4caf50">
+            <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+          </svg>
+          <h3>0</h3>
+          <p>Playlists</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="audio-player" preload="none"></audio>
+
+  <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
