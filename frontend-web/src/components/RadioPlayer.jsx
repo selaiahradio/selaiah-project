@@ -55,6 +55,7 @@ function RadioPlayer() {
         radioAPI.listenerLeave().catch(console.error);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const connectSocket = () => {
