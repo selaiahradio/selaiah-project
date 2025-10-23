@@ -671,6 +671,57 @@ app.use((req, res) => {
 });
 
 // ========================================
+// ENDPOINT TEMPORAL PARA CREAR ADMIN
+// ========================================
+const bcrypt = require('bcryptjs');
+
+app.get('/api/setup-admin', async (req, res) => {
+  try {
+    // Verificar si ya existe
+    const existingAdmin = await User.findOne({ email: 'admin@selaiah.com' });
+    
+    if (existingAdmin) {
+      // Actualizar contraseña
+      const hashedPassword = await bcrypt.hash('@Odg4383@', 10);
+      existingAdmin.password = hashedPassword;
+      existingAdmin.role = 'admin';
+      await existingAdmin.save();
+      
+      return res.json({
+        success: true,
+        message: 'Usuario admin actualizado',
+        email: 'admin@selaiah.com',
+        role: 'admin'
+      });
+    }
+
+    // Crear nuevo admin
+    const hashedPassword = await bcrypt.hash('@Odg4383@', 10);
+    const admin = new User({
+      email: 'admin@selaiah.com',
+      password: hashedPassword,
+      name: 'Administrador Selaiah',
+      role: 'admin'
+    });
+
+    await admin.save();
+
+    res.json({
+      success: true,
+      message: 'Usuario admin creado exitosamente',
+      email: 'admin@selaiah.com',
+      role: 'admin'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error creando admin',
+      error: error.message
+    });
+  }
+});
+
+// ========================================
 // CONEXIÓN DB Y START SERVER
 // ========================================
 const PORT = process.env.PORT || 3001;
