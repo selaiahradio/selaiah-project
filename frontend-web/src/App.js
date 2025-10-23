@@ -91,7 +91,7 @@ function App() {
             <Route path="/login" element={<Auth mode="login" />} />
             <Route path="/register" element={<Auth mode="register" />} />
             <Route
-              path="/admin"
+              path="/admin_sela"
               element={
                 <ProtectedRoute requireAdmin>
                   <Admin />
