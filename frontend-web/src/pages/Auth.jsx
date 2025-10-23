@@ -200,7 +200,6 @@ function Auth({ mode = 'login' }) {
                     <MenuItem value="oyente">Oyente (Usuario Normal)</MenuItem>
                     <MenuItem value="locutor">Locutor / DJ</MenuItem>
                     <MenuItem value="editor">Editor de Contenido</MenuItem>
-                    <MenuItem value="admin">Administrador</MenuItem>
                   </Select>
                 </FormControl>
                 <Button
