@@ -651,26 +651,6 @@ async function initializeRoles() {
 }
 
 // ========================================
-// MANEJO DE ERRORES
-// ========================================
-app.use((err, req, res, next) => {
-  console.error('❌ Error:', err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Error interno del servidor',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
-  });
-});
-
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Ruta no encontrada',
-    path: req.path
-  });
-});
-
-// ========================================
 // ENDPOINT TEMPORAL PARA CREAR ADMIN
 // ========================================
 const bcrypt = require('bcryptjs');
@@ -719,6 +699,26 @@ app.get('/api/setup-admin', async (req, res) => {
       error: error.message
     });
   }
+});
+
+// ========================================
+// MANEJO DE ERRORES
+// ========================================
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    success: false,
+    message: 'Error interno del servidor',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Ruta no encontrada',
+    path: req.path
+  });
 });
 
 // ========================================
