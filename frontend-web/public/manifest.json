@@ -1,12 +1,12 @@
 {
   "short_name": "Selaiah Radio",
-  "name": "Selaiah Radio - Tu Radio Cristiana 24/7",
+  "name": "Selaiah Radio - Donde el cielo toca la tierra",
   "description": "Radio cristiana en línea con música, predicaciones y programas cristianos",
   "icons": [
     {
-      "src": "logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
     },
     {
       "src": "logo192.png",
