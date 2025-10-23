@@ -1,67 +1,60 @@
 // ========================================
-// SELAIAH RADIO - CREAR USUARIO ADMIN
-// iHostCast Ltd © 2025
+// SELAIAH RADIO - CREATE ADMIN USER
+// Selaiah Radio Online LLC
 // ========================================
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-// Conectar a MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/selaiah')
-  .then(() => console.log('✅ Conectado a MongoDB'))
-  .catch(err => {
-    console.error('❌ Error conectando a MongoDB:', err);
-    process.exit(1);
-  });
+// User Schema
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  name: { type: String, required: true },
+  role: { type: String, enum: ['user', 'dj', 'admin'], default: 'user' },
+  createdAt: { type: Date, default: Date.now }
+});
 
-// Importar modelo de Usuario
-const User = require('../models/User');
+const User = mongoose.model('User', userSchema);
 
 async function createAdmin() {
   try {
-    // Verificar si ya existe el admin
+    console.log('🔌 Conectando a MongoDB...');
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ Conectado a MongoDB');
+
+    // Verificar si ya existe un admin
     const existingAdmin = await User.findOne({ email: 'admin@selaiah.com' });
     
     if (existingAdmin) {
-      console.log('⚠️  El usuario admin ya existe');
-      console.log('\n📧 Email: admin@selaiah.com');
-      console.log('🔑 Password: admin123');
-      console.log('👤 Rol: super_admin');
-      process.exit(0);
+      console.log('⚠️  Usuario admin ya existe');
+      console.log('📧 Email:', existingAdmin.email);
+      console.log('👤 Nombre:', existingAdmin.name);
+      console.log('🔑 Role:', existingAdmin.role);
+      
+      // Actualizar contraseña si es necesario
+      console.log('\n🔄 Actualizando contraseña...');
+      const hashedPassword = await bcrypt.hash('@Odg4383@', 10);
+      existingAdmin.password = hashedPassword;
+      await existingAdmin.save();
+      console.log('✅ Contraseña actualizada exitosamente!');
+      
+      await mongoose.connection.close();
+      return;
     }
 
-    // Hashear password
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-
-    // Crear usuario admin
-    const admin = await User.create({
+    // Crear nuevo admin
+    const hashedPassword = await bcrypt.hash('@Odg4383@', 10);
+    
+    const admin = new User({
       email: 'admin@selaiah.com',
       password: hashedPassword,
       name: 'Administrador Selaiah',
-      username: 'admin',
-      role: 'super_admin',
-      authProvider: 'local',
-      isActive: true,
-      isVerified: true,
-      permissions: [
-        'manage_users',
-        'manage_content',
-        'manage_streaming',
-        'manage_payments',
-        'view_analytics',
-        'manage_integrations'
-      ]
+      role: 'admin'
     });
 
-    console.log('\n========================================');
-    console.log('✅ USUARIO ADMINISTRADOR CREADO');
-    console.log('========================================');
-    console.log('\n📧 Email: admin@selaiah.com');
-    console.log('🔑 Password: admin123');
-    console.log('👤 Rol: super_admin');
-    console.log('🆔 ID:', admin._id);
-    console.log('\n========================================');
+    await admin.save();
     console.log('⚠️  IMPORTANTE: Cambia la contraseña después del primer login');
     console.log('========================================\n');
 
